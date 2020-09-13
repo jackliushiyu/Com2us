@@ -3,9 +3,30 @@ import subprocess
 import random
 import time
 import cv2
+from appium import webdriver
 
 
 class Base:
+    def __init__(self, cap: dict, host='localhost', port=4723):
+        if 'platformName' in cap:
+            self.__driver = webdriver.Remote('http://%s:%d/wd/hub' % (host, port), cap)
+        else:
+            raise Exception('Base初始化失败')
+        pass
+
+    def open_app(self, package, activity):
+        """
+            启动app
+            :param package:
+            :param activity:
+            :return:
+            """
+        self.__driver.start_activity(package, activity)
+        pass
+
+    def implicitly_wait(self, second):
+        self.__driver.implicitly_wait(second)
+
     @staticmethod
     def get_screen():
         # 截屏口令
@@ -16,6 +37,11 @@ class Base:
         os.system(cmd_get)
         os.system(cmd_send)
         img = cv2.imread(r'C:\Users\THINK\PycharmProjects\Com2us\images\temp\step.png')
+        return img
+
+    @staticmethod
+    def get_img(img_path):
+        img = cv2.imread(img_path)
         return img
 
     @staticmethod
@@ -47,7 +73,6 @@ class Base:
         os.system(cmd_click)
 
 
-# 截取手机屏幕并保存到电脑
 class ScreenShot:
     def __init__(self):
         # 查看连接的手机
@@ -78,8 +103,69 @@ class ScreenShot:
         # 输出执行命令结果结果
         print(stdout)
         print(stderr)
-if __name__ == '__main__':
-    Base.get_screen()
+
+
+class Info:
+    def __init__(self):
+        """
+        确保adb服务启动
+        """
+        cmd = 'tasklist |findstr adb.exe'
+        result = os.popen(cmd)
+        adb_info = result.buffer.read().decode(encoding='utf8')
+        if 'adb.exe' not in adb_info:
+            os.popen('adb start-server')
+
+    def get_platform_version(self):
+        """
+        获取安卓版本号
+        :return:
+        """
+        l = []
+        cmd = 'adb shell getprop ro.build.version.release'
+        text = os.popen(cmd)
+        for i in text:
+            l.append(i.strip())
+        return l[0]
+
+    def get_device_name(self):
+        """
+        获取设备
+        :return:
+        """
+        l = []
+        cmd = 'adb devices'
+        text = os.popen(cmd)
+        for i in text:
+            if i.strip().endswith('device'):
+                l.append(i.strip())
+        return l[0]
+
+    def get_package_and_activity(self, apk_path):
+        """
+        通过安装包获取包名和activity
+        :param apk_path: 安装包路径
+        :return: (package,activity)
+        """
+        cmd_package = 'aapt dumpsys badging %s|findstr package' % apk_path
+        cmd_activity = 'aapt dumpsys badging %s|findstr activity' % apk_path
+        info_package = os.popen(cmd_package)
+        info_activity = os.popen(cmd_activity)
+        package = info_package.buffer.read().decode(encoding='utf8').split("'")[1]
+        activity = info_activity.buffer.read().decode(encoding='utf8').split("'")[1]
+        return package, activity
+
+# if __name__ == '__main__':
+#     info = Info()
+#     cap = {}
+#     cap['platformName'] = 'Android'
+#     cap['platformVersion'] = info.get_platform_version()
+#     cap['deviceName'] = info.get_device_name()
+#     apk_path = r'..\apk\smon_603.apk'
+#     apk_info = info.get_package_and_activity(apk_path)
+#     driver = Base(cap)
+#     driver.open_app(*apk_info)
+#     driver.implicitly_wait(50)
 #     # # 命令1：在手机上截图step.png为图片名
 #     # cmd1 = r"adb shell /system/bin/screencap -p /sdcard/login.png"
 #     #

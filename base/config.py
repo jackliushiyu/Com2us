@@ -1,5 +1,22 @@
-class Settings():
-    def __init__(self):
+class Settings:
+    def __init__(self, auto_type):
+        """
+        :param auto_type: 所刷副本的类型
+        """
+        if auto_type == 'experience':
+            pass
+        elif auto_type == 'tower':
+            pass
+        elif auto_type == 'underworld':
+            pass
+        elif auto_type == 'rta':
+            pass
+        else:
+            pass
+
+        # 主界面关闭活动提示框
+        self.login_activity_x = [820, 860]
+        self.login_activity_y = [470, 510]
         # 关闭活动页面
         self.start_x = [460, 470]
         self.start_y = [430, 460]

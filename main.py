@@ -43,7 +43,7 @@ def experiences():
     刷火山口
     :return:
     """
-    sets = Settings()
+    sets = Settings('experience')
     img = cv2.imread(r'images\\login\\again2.png')
     times = 1
     max_times = 50
