@@ -4,10 +4,10 @@ from base.config import Settings
 
 
 def dog():
-    sets = Settings()
+    sets = Settings('kill')
     img = cv2.imread(r'images\\login\\again.png')
     times = 1
-    max_times = 15
+    max_times = 30
     while True:
         print('——————第 %d 次 次元觉醒 自动开始——————' % times)
         # 命令1：在手机上截图step.png为图片名
@@ -142,6 +142,6 @@ def tower():
 
 
 if __name__ == '__main__':
-    # dog()
-    experiences()
+    dog()
+    # experiences()
     # tower()
