@@ -26,12 +26,12 @@ class Settings:
         self.next_y = [430, 480]
 
         # 关闭邮件
-        self.mail_x = [840, 880]
-        self.mail_y = [10, 50]
+        self.mail_x = [840, 870]
+        self.mail_y = [70, 90]
 
         # 关闭特价
-        self.price_x = [810, 850]
-        self.price_y = [70, 105]
+        self.price_x = [835, 855]
+        self.price_y = [20, 40]
 
         # 战斗
         self.fight_x = [500, 580]
