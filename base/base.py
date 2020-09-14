@@ -155,7 +155,8 @@ class Info:
         activity = info_activity.buffer.read().decode(encoding='utf8').split("'")[1]
         return package, activity
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
+    Base.get_screen()
 #     info = Info()
 #     cap = {}
 #     cap['platformName'] = 'Android'
@@ -171,6 +172,6 @@ class Info:
 #     #
 #     # # 命令2：将图片保存到电脑C:\Users\THINK\PycharmProjects\Com2us\images\temp\step.png为要保存到电脑的路径
 #     # cmd2 = r"adb pull /sdcard/login.png C:\Users\THINK\PycharmProjects\Com2us\images\temp\step.png"
-#     # screen = ScreenShot()
-#     # screen.screen(cmd1)
-#     # screen.save_computer(cmd2)
+    # screen = ScreenShot()
+    # screen.screen(cmd1)
+    # screen.save_computer(cmd2)
