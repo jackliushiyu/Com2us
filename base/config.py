@@ -8,6 +8,7 @@ class Settings:
         elif auto_type == 'tower':
             pass
         elif auto_type == 'underworld':
+            print('underworld')
             pass
         elif auto_type == 'rta':
             pass
@@ -34,7 +35,7 @@ class Settings:
         self.price_y = [20, 40]
 
         # 战斗
-        self.fight_x = [500, 580]
+        self.fight_x = [500, 560]
         self.fight_y = [460, 520]
 
         # 百塔
